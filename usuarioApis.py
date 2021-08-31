@@ -1,8 +1,11 @@
 from flask import Blueprint, render_template, abort
 from flask import request
+from flask.json import jsonify
+from werkzeug.datastructures import Authorization
 from ValueWIneBack.Controllers import dbUsuarioController
 from ValueWIneBack.Errors import Controllererrors
 from ValueWIneBack.Responses import Controllerresponses
+import json
 usuario=Blueprint('usuario',__name__)
 url='/usuario'
 @usuario.route(''+url+'/insertUsuario',methods=['PUT'])
@@ -35,9 +38,12 @@ def LoginUser():
 
 @usuario.route(''+url+'/checkSesion',methods=['GET'])
 def checkSesion():
-    req=request.get_json();
-    reqToken=req['token']
-    response=dbUsuarioController.checkSesion(reqToken)
+    req1=request.headers["Authorization"]
+    token=str(req1).replace("Bearer ","")
+    print(token)
+    #req=request.get_json();
+    #reqToken=req['token']
+    response=dbUsuarioController.checkSesion(token)
     if response is False:
         return Controllererrors.make_error(401,"Esta nunca se logueo o esta deslogueado")
     return Controllerresponses.make_response(200,"Esta logueado")
