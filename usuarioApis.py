@@ -17,6 +17,8 @@ def InsertUser():
     response=dbUsuarioController.insertUser(reqNombre,reqTelefono,reqRol,reqDireccion,reqEmail,reqPassword)
     if response is False:
         return Controllererrors.make_error(500,"No se pudo insertar a DB")
+    if response is None:
+        return Controllererrors.make_error(500,"Email existente")
     return Controllerresponses.make_response(200,"Usuario Creado correctamente")
 
 @usuario.route(''+url+'/loginUsuario',methods=['GET'])
@@ -29,4 +31,13 @@ def LoginUser():
          return Controllererrors.make_error(500,"No se pudo buscar a DB")
     if response is None:
          return Controllererrors.make_error(404,"Usuario o Contraseña incorrectas")
-    return {"token":response}
+    return response
+
+@usuario.route(''+url+'/checkSesion',methods=['GET'])
+def checkSesion():
+    req=request.get_json();
+    reqToken=req['token']
+    response=dbUsuarioController.checkSesion(reqToken)
+    if response is False:
+        return Controllererrors.make_error(401,"Esta nunca se logueo o esta deslogueado")
+    return Controllerresponses.make_response(200,"Esta logueado")

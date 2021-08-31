@@ -1,5 +1,6 @@
 import mysql.connector
 import os
+from ValueWIneBack.Models import usuarioModel
 from dotenv import load_dotenv
 import jwt
 load_dotenv()
@@ -21,9 +22,12 @@ def get_db():
     
 def insertUser(Nombre,Telefono,Rol,Direccion,Email,Password):
     DB,c=get_db()
-    
     if DB==False:
         return False;
+    resp=getUser(Email)
+    print(resp)
+    if resp == True: #controla que no exista ese email en la db para no volver a insertarlo
+        return None
     try:
         query=("INSERT INTO Usuario "
                     "(Nombre, Telefono, Rol, Direccion,Email,Password)"
@@ -33,15 +37,15 @@ def insertUser(Nombre,Telefono,Rol,Direccion,Email,Password):
         c.close()
         DB.close()
         print("insertado")
-        return status
+        return True
     except Exception as e:
         print(e)
         return False
     
 def login(email,ps):
-    #trabajar en que la pass se debe desencriptar
     secret=os.getenv("KEY")
     DB,c=get_db()
+    print(ps)
     if DB==False:
         return False;
     try:
@@ -53,12 +57,35 @@ def login(email,ps):
            return None 
         c.close()
         DB.close()
-        print(user,type(user))
         payload={"email":email,
                  "rol":user["Rol"]}
         token=jwt.encode(payload, secret, algorithm="HS256")
-        print("encontrado")
-        return token
+        usuario=usuarioModel.UsuarioLogueado(user["Rol"],user["Email"],token)
+        return usuario.__json__()
     except Exception as e:
         print(e)
         return False
+    
+    
+def checkSesion(token):
+    secret=os.getenv("KEY")
+    try:
+        decodeToken=jwt.decode(token, secret, algorithms="HS256")
+        print("Token is still valid and active")
+        return True;
+    except jwt.InvalidTokenError as e:
+        return False;
+    
+def getUser(email):
+    DB,c=get_db()
+    if DB==False:
+        return False;
+    query=("SELECT * FROM Usuario "
+               "WHERE Email = %s")
+    c.execute(query,(email,))
+    user=c.fetchone()
+    c.close()
+    DB.close()
+    if user != None:
+        return True 
+    return None

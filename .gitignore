@@ -1,2 +1,3 @@
 .env
-/__pycache__
+/__pycache__/
+/Services/py__cache__/
