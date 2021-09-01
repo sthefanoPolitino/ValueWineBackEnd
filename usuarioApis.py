@@ -18,9 +18,10 @@ def InsertUser():
     reqEmail=req["email"]
     reqPassword=req['password']
     response=dbUsuarioController.insertUser(reqNombre,reqTelefono,reqRol,reqDireccion,reqEmail,reqPassword)
-    if response is False:
+    print(response)
+    if response == 500:
         return Controllererrors.make_error(500,"No se pudo insertar a DB")
-    if response is None:
+    if response == 501:
         return Controllererrors.make_error(500,"Email existente")
     return Controllerresponses.make_response(200,"Usuario Creado correctamente")
 
@@ -30,9 +31,9 @@ def LoginUser():
     reqEmail=req['email']
     reqPassword=req['password']
     response=dbUsuarioController.loginUser(reqEmail,reqPassword)
-    if response is False:
+    if response == 500:
          return Controllererrors.make_error(500,"No se pudo buscar a DB")
-    if response is None:
+    if response == 404:
          return Controllererrors.make_error(404,"Usuario o Contraseña incorrectas")
     return response
 
@@ -44,6 +45,7 @@ def checkSesion():
     #req=request.get_json();
     #reqToken=req['token']
     response=dbUsuarioController.checkSesion(token)
-    if response is False:
-        return Controllererrors.make_error(401,"Esta nunca se logueo o esta deslogueado")
-    return Controllerresponses.make_response(200,"Esta logueado")
+    print(response)
+    if response == 401:
+        return Controllererrors.make_error(401,"Esta nunca se logueo o esta deslogueado, token incorrecto")
+    return Controllerresponses.make_response(200,"Esta logueado, Token valido")

@@ -16,18 +16,17 @@ def get_db():
         cursor=db.cursor(dictionary=True)
         print('DB conectada')
         return db,cursor
-    except Exception as e:
+    except:
         print("problema al acceder a la DB")
-        return False;
+        return False,False
     
 def insertUser(Nombre,Telefono,Rol,Direccion,Email,Password):
     DB,c=get_db()
     if DB==False:
-        return False;
+        return 500;
     resp=getUser(Email)
-    print(resp)
     if resp == True: #controla que no exista ese email en la db para no volver a insertarlo
-        return None
+        return 501
     try:
         query=("INSERT INTO Usuario "
                     "(Nombre, Telefono, Rol, Direccion,Email,Password)"
@@ -37,24 +36,23 @@ def insertUser(Nombre,Telefono,Rol,Direccion,Email,Password):
         c.close()
         DB.close()
         print("insertado")
-        return True
+        return 200
     except Exception as e:
-        
-        return False
+        return 500
     
 def login(email,ps):
     secret=os.getenv("KEY")
     DB,c=get_db()
     print(ps)
     if DB==False:
-        return False;
+        return 500;
     try:
         query=("SELECT * FROM Usuario "
                "WHERE Email = %s AND Password = %s")
         c.execute(query,(email,ps))
         user=c.fetchone()
         if user is None:
-           return None 
+           return 404 
         c.close()
         DB.close()
         payload={"email":email,
@@ -63,8 +61,7 @@ def login(email,ps):
         usuario=usuarioModel.UsuarioLogueado(user["Rol"],user["Email"],token)
         return usuario.__json__()
     except Exception as e:
-        
-        return False
+        return 500
     
     
 def checkSesion(token):
@@ -72,14 +69,12 @@ def checkSesion(token):
     try:
         decodeToken=jwt.decode(token, secret, algorithms="HS256")
         print("Token is still valid and active")
-        return True;
+        return 200;
     except jwt.InvalidTokenError as e:
-        return False;
+        return 401;
     
 def getUser(email):
     DB,c=get_db()
-    if DB==False:
-        return False;
     query=("SELECT * FROM Usuario "
                "WHERE Email = %s")
     c.execute(query,(email,))
