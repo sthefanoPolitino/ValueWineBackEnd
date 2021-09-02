@@ -48,4 +48,5 @@ def checkSesion():
     print(response)
     if response == 401:
         return Controllererrors.make_error(401,"Token incorrecto o expirado")
-    return Controllerresponses.make_response(200,"Esta logueado, Token valido")
+    return {"token":response,
+            "message":"Token Correcto"}
