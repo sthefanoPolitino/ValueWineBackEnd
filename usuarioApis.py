@@ -44,9 +44,11 @@ def checkSesion():
     print(token)
     #req=request.get_json();
     #reqToken=req['token']
-    response=dbUsuarioController.checkSesion(token)
+    response=dbUsuarioController.checkSesionRefreshtoken(token)
     print(response)
     if response == 401:
-        return Controllererrors.make_error(401,"Token incorrecto o expirado")
+        return Controllererrors.make_error(401,"Token incorrecto")
+    if response == 518:
+        return Controllererrors.make_error(401,"Token expirado")
     return {"token":response,
             "message":"Token Correcto"}
