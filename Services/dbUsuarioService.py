@@ -2,7 +2,7 @@ import mysql.connector
 import os
 from ValueWIneBack.Models import usuarioModel
 from dotenv import load_dotenv
-import jwt
+import jwt,datetime
 load_dotenv()
 def get_db():
     user=os.getenv('USERDB')
@@ -55,12 +55,15 @@ def login(email,ps):
            return 404 
         c.close()
         DB.close()
+        print(datetime.datetime.now()+datetime.timedelta(seconds=60))
         payload={"email":email,
-                 "rol":user["Rol"]}
+                 "rol":user["Rol"],
+                 "exp": datetime.datetime.utcnow()+datetime.timedelta(seconds=30)}
         token=jwt.encode(payload, secret, algorithm="HS256")
         usuario=usuarioModel.UsuarioLogueado(user["Rol"],user["Email"],token)
         return usuario.__json__()
     except Exception as e:
+        
         return 500
     
     
@@ -71,6 +74,8 @@ def checkSesion(token):
         print("Token is still valid and active")
         return 200;
     except jwt.InvalidTokenError as e:
+        return 401;
+    except jwt.ExpiredSignatureError:
         return 401;
     
 def getUser(email):

@@ -47,5 +47,5 @@ def checkSesion():
     response=dbUsuarioController.checkSesion(token)
     print(response)
     if response == 401:
-        return Controllererrors.make_error(401,"Esta nunca se logueo o esta deslogueado, token incorrecto")
+        return Controllererrors.make_error(401,"Token incorrecto o expirado")
     return Controllerresponses.make_response(200,"Esta logueado, Token valido")
