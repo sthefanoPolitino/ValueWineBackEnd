@@ -52,7 +52,7 @@ def login(email,ps):
         c.execute(query,(email,ps))
         user=c.fetchone()
         if user is None:
-           return 404 
+           return 206 
         c.close()
         DB.close()
         print(datetime.datetime.now()+datetime.timedelta(seconds=60))

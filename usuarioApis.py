@@ -33,8 +33,8 @@ def LoginUser():
     response=dbUsuarioController.loginUser(reqEmail,reqPassword)
     if response == 500:
          return Controllererrors.make_error(500,"No se pudo buscar a DB")
-    if response == 404:
-         return Controllererrors.make_error(404,"Usuario o Contraseña incorrectas")
+    if response == 206:
+         return Controllererrors.make_error(206,"Usuario o Contraseña incorrectas")
     return response
 
 @usuario.route(''+url+'/checkSesion',methods=['GET'])
