@@ -39,15 +39,13 @@ def LoginUser():
 
 @usuario.route(''+url+'/checkSesion',methods=['GET'])
 def checkSesion():
-    req1=request.headers["Authorization"]
-    token=str(req1).replace("Bearer ","")
-    print(token)
+    req1=request.headers
     #req=request.get_json();
     #reqToken=req['token']
-    response=dbUsuarioController.checkSesionRefreshtoken(token)
+    response=dbUsuarioController.checkSesionRefreshtoken(req1)
     print(response)
     if response == 401:
-        return Controllererrors.make_error(401,"Token incorrecto")
+        return Controllererrors.make_error(401,"No estas autorizado")
     if response == 518:
         return Controllererrors.make_error(401,"Token expirado")
     return {"token":response,

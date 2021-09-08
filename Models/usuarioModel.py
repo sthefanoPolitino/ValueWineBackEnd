@@ -1,14 +1,14 @@
 class Usuario:
     def __init__(self,Nombre:str,Telefono:int,Rol:bool,Direccion:str,Email:str,Password:str):
-        self.Nombre=Nombre,
-        self.Telefono=Telefono,
-        self.Rol=Rol,
-        self.Direccion=Direccion,
-        self.Email=Email,
-        self.Password=Password,
+        self.Nombre=Nombre
+        self.Telefono=Telefono
+        self.Rol=Rol
+        self.Direccion=Direccion
+        self.Email=Email
+        self.Password=Password
     def __json__(self):
-        return {"Nombre":self.Nombre[0],"Telefono":self.Telefono[0],"Rol":self.Rol[0],
-                "Direccion":self.Direccion[0],"Email":self.Email[0],"Password":self.Password[0]}
+        return {"Nombre":self.Nombre,"Telefono":self.Telefono,"Rol":self.Rol,
+                "Direccion":self.Direccion,"Email":self.Email,"Password":self.Password}
     
 class UsuarioLogueado:
     

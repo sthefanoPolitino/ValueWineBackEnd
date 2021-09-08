@@ -23,8 +23,13 @@ def loginUser(Email,Password):
     return response
 
 
-def checkSesionRefreshtoken(token):
+def checkSesionRefreshtoken(headers):
     secret=os.getenv("KEY")
+    try:
+        reqHeaders=headers["Authorization"]
+        token=str(reqHeaders).replace("Bearer ","")
+    except:
+        return 401
     try:
         decodeToken=jwt.decode(token, secret, algorithms="HS256")
         print("Token is still valid and active")
@@ -38,11 +43,3 @@ def checkSesionRefreshtoken(token):
     except jwt.InvalidTokenError as e:
         return 401;
     
-def checkSesion(token):
-    secret=os.getenv("KEY")
-    try:
-        decodeToken=jwt.decode(token, secret, algorithms="HS256")
-        print("Token is still valid and active")
-        return 200;
-    except jwt.InvalidTokenError as e:
-        return 401;
