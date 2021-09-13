@@ -12,10 +12,11 @@ class Usuario:
     
 class UsuarioLogueado:
     
-     def __init__(self,Rol:bool,Email:str,Token): 
-        self.Rol=Rol,
-        self.Email=Email,
+     def __init__(self,Rol:bool,Id:int,Email:str,Token): 
+        self.Rol=Rol
+        self.Id=Id
+        self.Email=Email
         self.Token=Token
      def __json__(self):
-        return {"Rol":self.Rol[0],"Email":self.Email[0],"Token":self.Token}
+        return {"Rol":self.Rol,"Email":self.Email,"idUsuario":self.Id,"Token":self.Token}
     

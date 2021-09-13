@@ -34,7 +34,9 @@ Es necesario configurar las siguientes variables de entorno
 *KEY=qJdkOKZkOPxxeIYgi1l0kAJMlHtVN9oKAjIH0gsQ
 
 
-## APIs AutoinstallerBack
+## APIs ValueWineBack
+
+### Usuario 
 
 ### PUT Insertar Usuario
 
@@ -75,3 +77,39 @@ ${URL}/usuario/checkSesion
 
 Bearer Token : eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InBydWViYUB1c2VyLmNvbSIsInJvbCI6MCwiZXhwIjoxNjMwNjIwMjMyfQ.b2AMUJymtNu5ewOgH-_Xc3J58WkRtQUw9l_2Fm0MTI0
 
+### Vino
+
+### PUT Insert Vino
+
+Nos conectamos con mysql insertamos un Vino
+
+#### URL
+```
+${URL}/vino/insertVino
+```
+#### HEADER
+
+Bearer Token : eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InBydWViYUB1c2VyLmNvbSIsInJvbCI6MCwiZXhwIjoxNjMwNjIwMjMyfQ.b2AMUJymtNu5ewOgH-_Xc3J58WkRtQUw9l_2Fm0MTI0
+
+#### BODY
+
+{
+    "nombre":"vino de prueba", "VolatileAcidity":1,"FixedAcidity":2,"CitricAcid":2,"FreeSulfurDioxide":0,
+    "Chlorides":1,"Density":0.3,"TotalSulfurDioxide":0.6,"PH":0.7,"Sulphates":1, "Alcohol":1.2,"Quality":1.2,"idProductor":2
+}
+
+### GET Vinos By id Productor
+
+Nos conectamos con mysql para buscar vinos de un productor por su ID
+
+#### URL
+```
+${URL}/vino/getVinosByIdProductor?idProductor=2
+```
+#### HEADER
+
+Bearer Token : eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InBydWViYUB1c2VyLmNvbSIsInJvbCI6MCwiZXhwIjoxNjMwNjIwMjMyfQ.b2AMUJymtNu5ewOgH-_Xc3J58WkRtQUw9l_2Fm0MTI0
+
+#### Params
+
+idProductor 2, concatenarlo en la url

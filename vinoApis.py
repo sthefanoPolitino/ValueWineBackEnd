@@ -33,7 +33,19 @@ def InsertVino():
                                        reqFixedAcidity,reqCitricAcid,reqFreeSulfurDioxide,
                                        reqChlorides,reqDensity,reqTotalSulfurDioxide,reqPH,
                                        reqSulphates,reqAlcohol,reqQuality,reqIdProductor)
-    print(response)
+    print(response,"aca")
     if response == 500:
-        return Controllererrors.make_error(500,"No se pudo insertar a DB")
+        return Controllererrors.make_error(500,"No se pudo insertar en DB")
     return Controllerresponses.make_response(200,"Vino Creado correctamente")
+
+@vino.route(''+url+'/getVinosByIdProductor',methods=['GET'])
+def getVinosByIdProductor():
+    req1=request.headers #trae todos los headers
+    respCheckToken=dbUsuarioController.checkSesionRefreshtoken(req1)
+    if respCheckToken == 401:
+            return Controllererrors.make_error(401,"No estas autorizado")
+    if respCheckToken == 518:
+        return Controllererrors.make_error(401,"Token expirado")
+    req=request.args #trae los params en formato de dict
+    print(req["idProductor"])
+    return ""

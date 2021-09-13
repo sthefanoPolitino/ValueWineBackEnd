@@ -26,7 +26,7 @@ def loginUser(Email,Password):
 def checkSesionRefreshtoken(headers):
     secret=os.getenv("KEY")
     try:
-        reqHeaders=headers["Authorization"]
+        reqHeaders=headers["Authorization"] #obtenemos el authorization dentro de los headers
         token=str(reqHeaders).replace("Bearer ","")
     except:
         return 401
