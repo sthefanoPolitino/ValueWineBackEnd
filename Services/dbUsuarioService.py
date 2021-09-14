@@ -17,6 +17,7 @@ def get_db():
         print('DB conectada')
         return db,cursor
     except:
+        
         print("problema al acceder a la DB")
         return False,False
     
@@ -38,6 +39,7 @@ def insertUser(Nombre,Telefono,Rol,Direccion,Email,Password):
         print("insertado")
         return 200
     except Exception as e:
+        print(e)
         return 500
     
 def login(email,ps):

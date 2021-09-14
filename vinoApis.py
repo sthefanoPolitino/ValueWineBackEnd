@@ -38,6 +38,23 @@ def InsertVino():
         return Controllererrors.make_error(500,"No se pudo insertar en DB")
     return Controllerresponses.make_response(200,"Vino Creado correctamente")
 
+@vino.route(''+url+'/deleteVino',methods=['DELETE'])
+def deleteVino():
+    req1=request.headers #trae todos los headers
+    respCheckToken=dbUsuarioController.checkSesionRefreshtoken(req1)
+    if respCheckToken == 401:
+            return Controllererrors.make_error(401,"No estas autorizado")
+    if respCheckToken == 518:
+        return Controllererrors.make_error(401,"Token expirado")
+    req=request.args #trae los params en formato de dict
+    response=VinoController.deleteVino(req["id"])
+    print(response)
+    if response == 500:
+        return Controllererrors.make_error(500,"No se buscar en DB")
+    if response == 404:
+        return Controllererrors.make_error(404,"No existe ese vino")
+    return Controllerresponses.make_response(200,"Vino eliminado correctamente")
+
 @vino.route(''+url+'/getVinosByIdProductor',methods=['GET'])
 def getVinosByIdProductor():
     req1=request.headers #trae todos los headers
@@ -47,5 +64,10 @@ def getVinosByIdProductor():
     if respCheckToken == 518:
         return Controllererrors.make_error(401,"Token expirado")
     req=request.args #trae los params en formato de dict
-    print(req["idProductor"])
-    return ""
+    response=VinoController.getVinosByIdProductor(req["idProductor"])
+    print(response)
+    if response == 500:
+        return Controllererrors.make_error(500,"No se buscar en DB")
+    if response == 404:
+        return Controllererrors.make_error(404,"No existe ese id de productor o el productor no tiene vinos")
+    return {"vinos":response}
