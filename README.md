@@ -77,7 +77,7 @@ ${URL}/usuario/checkSesion
 
 Bearer Token : eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InBydWViYUB1c2VyLmNvbSIsInJvbCI6MCwiZXhwIjoxNjMwNjIwMjMyfQ.b2AMUJymtNu5ewOgH-_Xc3J58WkRtQUw9l_2Fm0MTI0
 
-### Vino
+## Vino
 
 ### PUT Insert Vino
 
@@ -95,7 +95,7 @@ Bearer Token : eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InBydWViYUB1c2Vy
 
 {
     "nombre":"vino de prueba", "VolatileAcidity":1,"FixedAcidity":2,"CitricAcid":2,"FreeSulfurDioxide":0,
-    "Chlorides":1,"Density":0.3,"TotalSulfurDioxide":0.6,"PH":0.7,"Sulphates":1, "Alcohol":1.2,"Quality":1.2,"idProductor":2
+    "Chlorides":1,"Density":0.3,"TotalSulfurDioxide":0.6,"PH":0.7,"Sulphates":1, "Alcohol":1.2,"idProductor":2
 }
 
 ### GET Vinos By id Productor
@@ -113,3 +113,19 @@ Bearer Token : eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InBydWViYUB1c2Vy
 #### Params
 
 idProductor 2, concatenarlo en la url
+
+### Delete Vino By id Vino
+
+Nos conectamos con mysql para eliminar un vino por su id
+
+#### URL
+```
+${URL}/vino/deleteVino?id=9
+```
+#### HEADER
+
+Bearer Token : eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InBydWViYUB1c2VyLmNvbSIsInJvbCI6MCwiZXhwIjoxNjMwNjIwMjMyfQ.b2AMUJymtNu5ewOgH-_Xc3J58WkRtQUw9l_2Fm0MTI0
+
+#### Params
+
+idVino 9, concatenarlo en la url

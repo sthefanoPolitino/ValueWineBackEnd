@@ -27,12 +27,11 @@ def InsertVino():
     reqPH=req["PH"]
     reqSulphates=req["Sulphates"]
     reqAlcohol=req["Alcohol"]
-    reqQuality=req["Quality"]
     reqIdProductor=req["idProductor"]
     response=VinoController.insertVino(reqNombre,reqVolatileAcidity,
                                        reqFixedAcidity,reqCitricAcid,reqFreeSulfurDioxide,
                                        reqChlorides,reqDensity,reqTotalSulfurDioxide,reqPH,
-                                       reqSulphates,reqAlcohol,reqQuality,reqIdProductor)
+                                       reqSulphates,reqAlcohol,reqIdProductor)
     print(response,"aca")
     if response == 500:
         return Controllererrors.make_error(500,"No se pudo insertar en DB")
@@ -71,3 +70,20 @@ def getVinosByIdProductor():
     if response == 404:
         return Controllererrors.make_error(404,"No existe ese id de productor o el productor no tiene vinos")
     return {"vinos":response}
+
+@vino.route(''+url+'/predictionQuality',methods=['POST'])
+def predictionQuality():
+    req1=request.headers #trae todos los headers
+    respCheckToken=dbUsuarioController.checkSesionRefreshtoken(req1)
+    if respCheckToken == 401:
+            return Controllererrors.make_error(401,"No estas autorizado")
+    if respCheckToken == 518:
+        return Controllererrors.make_error(401,"Token expirado")
+    req=request.args
+    response=VinoController.predictionQuality(req["idVino"])
+    print(response)
+    if response == 500:
+        return Controllererrors.make_error(500,"No se buscar en DB")
+    if response == 404:
+        return Controllererrors.make_error(404,"No existe ese vino")
+    return {"vino":response}

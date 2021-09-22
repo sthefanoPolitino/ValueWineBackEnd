@@ -1,5 +1,5 @@
 class vino:
-    def __init__(self,Nombre:str, VolatileAcidity:int, FixedAcidity: float, CitricAcid: float, 
+    def __init__(self,Nombre:str, VolatileAcidity:float, FixedAcidity: float, CitricAcid: float, 
                 FreeSulfurDioxide: float, Chlorides: float, Density: float, TotalSulfurDioxide: float,
                 PH: float, Sulphates: float, Alcohol: float, Quality: float, IdProductor: int):
         self.Nombre=Nombre
@@ -13,7 +13,7 @@ class vino:
         self.PH=PH
         self.Sulphates=Sulphates
         self.Alcohol=Alcohol
-        self.Quality=Quality
+        self.Quality=None
         self.IdProductor=IdProductor
     def __json__(self):
         return {"Nombre":self.Nombre,"VolatileAcidity":self.VolatileAcidity,

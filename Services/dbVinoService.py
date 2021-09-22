@@ -60,3 +60,24 @@ def deleteVino(id):
         print(e)
         return 500
     return ""
+
+def insertpredictionQuality(id):
+    DB,c=get_db()
+    if DB==False:
+        return 500;
+    try:
+        query=("UPDATE Vino SET Quality=%s WHERE id = %s")
+        c.execute(query,(3.0,id,))
+        status=DB.commit();
+        if c.rowcount==0:
+            return 404
+        queryGetVino=("SELECT * from Vino WHERE id = %s")
+        c.execute(queryGetVino,(id,))
+        vino=c.fetchone()
+        c.close()
+        DB.close()
+        return vino
+        
+    except Exception as e:
+        print(e)
+        return 500
