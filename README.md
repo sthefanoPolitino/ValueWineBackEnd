@@ -1,5 +1,5 @@
-# ValueWIneBack
-# AutoInstaller -> PuntoSalud
+# ValueWineBack
+# ValueWineBack -> Microservicio Rest
 
 ## Descripción
 Micro-servicio creado para ser consumido por el frontend Mobile.
@@ -9,7 +9,7 @@ Micro-servicio creado para ser consumido por el frontend Mobile.
 
 
 ## Guía de inicio
-Para obtener una copia del proyecto se deberá hacer click en el botón "Clonar" y copiar la dirección ssh o https dependiendo si se tiene una clave ssh vinculada con el proyecto o no. Ejemplo de una dirección https es: "https://gitlab.com/itcsoluciones/autoinstallerback.git". Luego, se deberá clonar el proyecto con el comando "git clone + la dirección https copiada", luego hay que abrir una terminal en la dirección del proyecto, ejecutar "git checkout + el nombre de la rama a la que se quiere ir".
+Para obtener una copia del proyecto se deberá hacer click en el botón "Clonar" y copiar la dirección ssh o https dependiendo si se tiene una clave ssh vinculada con el proyecto o no. Ejemplo de una dirección https es: "https://github.com/Polisthefano/ValueWIneBack.git". Luego, se deberá clonar el proyecto con el comando "git clone + la dirección https copiada", luego hay que abrir una terminal en la dirección del proyecto, ejecutar "git checkout + el nombre de la rama a la que se quiere ir".
 
 Instalar dependencias:
 pip install -r requirements.txt
@@ -77,7 +77,7 @@ ${URL}/usuario/checkSesion
 
 Bearer Token : eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InBydWViYUB1c2VyLmNvbSIsInJvbCI6MCwiZXhwIjoxNjMwNjIwMjMyfQ.b2AMUJymtNu5ewOgH-_Xc3J58WkRtQUw9l_2Fm0MTI0
 
-## Vino
+### Vino
 
 ### PUT Insert Vino
 
