@@ -1,6 +1,17 @@
 from werkzeug.wrappers import response
 from ..Models.vinoModel import vino
 from ..Services import dbVinoService
+# Imports necesarios
+import numpy as np
+import pandas as pd
+import seaborn as sb
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+from matplotlib import cm
+plt.rcParams['figure.figsize'] = (16, 9)
+plt.style.use('ggplot')
+from sklearn import linear_model
+from sklearn.metrics import mean_squared_error, r2_score
 def insertVino(Nombre,VolatileAcidity,FixedAcidity,CitricAcid,
                FreeSulfurDioxide,Chlorides,Density,
     TotalSulfurDioxide, PH,Sulphates,Alcohol,IdProductor):
@@ -21,3 +32,4 @@ def deleteVino(id):
 def predictionQuality(id):
     response=dbVinoService.insertpredictionQuality(id)
     return response
+
