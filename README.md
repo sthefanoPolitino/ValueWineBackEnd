@@ -129,3 +129,22 @@ Bearer Token : eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InBydWViYUB1c2Vy
 #### Params
 
 idVino 9, concatenarlo en la url
+
+## Herramientas
+
+### Desarrollo
+* [PYTHON](https://www.python.org/) v3.9.6 o superior
+* [FLASK](https://flask.palletsprojects.com) v2.0.1 o superior
+* [Postman](https://www.postman.com/)
+
+## Versionado
+Versionado Semántico 1.0.0
+
+Dado un número de versión MAYOR.MENOR.PARCHE, se incrementa:
+la versión MAYOR cuando realizas un cambio incompatible en el API,
+la versión MENOR cuando añades funcionalidad que compatible con versiones anteriores, y
+la versión PARCHE cuando reparas errores compatibles con versiones anteriores.
+Para tags de git utilizar **v**MAYOR.MENOR.PARCHE (ejemplo v1.1.0), para versionado de docker imagen utilizar MAYOR.MENOR.PARCHE (ejemplo 1.1.0).
+
+## Autores
+Sthefano Politino
