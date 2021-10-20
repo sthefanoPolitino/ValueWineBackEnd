@@ -8,6 +8,7 @@ vino=Blueprint('vino',__name__)
 url='/vino'
 @vino.route(''+url+'/insertVino',methods=['PUT'])
 def InsertVino():
+    
     req1=request.headers
     respCheckToken=dbUsuarioController.checkSesionRefreshtoken(req1)
     if respCheckToken == 401:
@@ -28,10 +29,12 @@ def InsertVino():
     reqSulphates=req["Sulphates"]
     reqAlcohol=req["Alcohol"]
     reqIdProductor=req["idProductor"]
-    response=VinoController.insertVino(reqNombre,reqVolatileAcidity,
+    redRedwine=req["Redwine"]
+    reqResidualsugar=req["Residualsugar"]
+    response=VinoController.insertVino(reqNombre,reqResidualsugar,reqVolatileAcidity,
                                        reqFixedAcidity,reqCitricAcid,reqFreeSulfurDioxide,
                                        reqChlorides,reqDensity,reqTotalSulfurDioxide,reqPH,
-                                       reqSulphates,reqAlcohol,reqIdProductor)
+                                       reqSulphates,reqAlcohol,reqIdProductor,redRedwine)
     print(response,"aca")
     if response == 500:
         return Controllererrors.make_error(500,"No se pudo insertar en DB")
@@ -83,7 +86,7 @@ def predictionQuality():
     response=VinoController.predictionQuality(req["idVino"])
     print(response)
     if response == 500:
-        return Controllererrors.make_error(500,"No se buscar en DB")
+        return Controllererrors.make_error(500,"No se pudo buscar en DB")
     if response == 404:
         return Controllererrors.make_error(404,"No existe ese vino")
     return {"vino":response}

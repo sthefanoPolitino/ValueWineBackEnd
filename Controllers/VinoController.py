@@ -12,12 +12,13 @@ plt.rcParams['figure.figsize'] = (16, 9)
 plt.style.use('ggplot')
 from sklearn import linear_model
 from sklearn.metrics import mean_squared_error, r2_score
-def insertVino(Nombre,VolatileAcidity,FixedAcidity,CitricAcid,
+def insertVino(Nombre,Residualsugar,VolatileAcidity,FixedAcidity,CitricAcid,
                FreeSulfurDioxide,Chlorides,Density,
-    TotalSulfurDioxide, PH,Sulphates,Alcohol,IdProductor):
-    vinoObj=vino(Nombre,VolatileAcidity,FixedAcidity,CitricAcid
+    TotalSulfurDioxide, PH,Sulphates,Alcohol,IdProductor,redwine):
+    vinoObj=vino(Nombre,Residualsugar,VolatileAcidity,FixedAcidity,CitricAcid
                  ,FreeSulfurDioxide,Chlorides,Density,TotalSulfurDioxide,PH,Sulphates,
-                 Alcohol,None,IdProductor)
+                 Alcohol,None,IdProductor,redwine)
+    
     response=dbVinoService.insertVino(vinoObj.__json__())
     return response
 
