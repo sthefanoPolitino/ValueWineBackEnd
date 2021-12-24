@@ -32,7 +32,7 @@ def insertVino(vino):
 def getVinosByIdProductor(id):
     DB,c=get_db()
     if DB==False:
-        return c;
+        return str(c);
     try:
         query=("SELECT * from Vino WHERE idProductor = %s")
         c.execute(query,(id,))
@@ -49,7 +49,7 @@ def getVinosByIdProductor(id):
         return vinos
     except Exception as e:
         print(e)
-        return e
+        return str(e)
     
 def deleteVino(id):
     DB,c=get_db()
@@ -73,7 +73,7 @@ def deleteVino(id):
 def insertpredictionQuality(id):
     DB,c=get_db()
     if DB==False:
-        return c;
+        return str(c);
     #busca el vino a predecir en la db
     vinoApredecir={}
     result=None
@@ -82,27 +82,23 @@ def insertpredictionQuality(id):
         vinoApredecir=c.fetchone()
         if(vinoApredecir==None):
             return 404 
-       
         result=Prediction.prediccion(vinoApredecir)
-        print(vinoApredecir,"el vino","el resultado",result)
-        
     except Exception as e:
-        return 500
-    
+        return str(e)
     #hace update del vino hiciste la prediccion
     try:
         query=("UPDATE Vino SET Quality=%s WHERE id = %s")
         c.execute(query,(result,id,))
         status=DB.commit();
-        if c.rowcount==0:
-            return 404
+    except Exception as e:
+        return str(e)
+    try:
         queryGetVino=("SELECT * from Vino WHERE id = %s")
         c.execute(queryGetVino,(id,))
         vino=c.fetchone()
         c.close()
         DB.close()
         return vino
-        
     except Exception as e:
         print(e)
         return str(e)

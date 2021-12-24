@@ -55,31 +55,21 @@ def getVinosByIdProductor():
     req1=request.headers #trae todos los headers
     respCheckToken=dbUsuarioController.checkSesionRefreshtoken(req1)
     if respCheckToken == 401:
-            return Controllererrors.make_error(401,"No estas autorizado")
+            return VinoController.makeError("No estas autorizado",None,401)
     if respCheckToken == 518:
-        return Controllererrors.make_error(401,"Token expirado")
+        return VinoController.makeError("Token expirado",None,401)
     req=request.args #trae los params en formato de dict
     response=VinoController.getVinosByIdProductor(req["idProductor"])
-    
-    if response == 500:
-        return Controllererrors.make_error(500,"No se buscar en DB")
-    if response == 404:
-        return Controllererrors.make_error(404,"No existe ese id de productor o el productor no tiene vinos")
-    return {"vinos":response}
+    return response
 
 @vino.route(''+url+'/predictionQuality',methods=['POST'])
 def predictionQuality():
     req1=request.headers #trae todos los headers
     respCheckToken=dbUsuarioController.checkSesionRefreshtoken(req1)
     if respCheckToken == 401:
-            return Controllererrors.make_error(401,"No estas autorizado")
+            return VinoController.makeError("No estas autorizado",None,401)
     if respCheckToken == 518:
-        return Controllererrors.make_error(401,"Token expirado")
+        return VinoController.makeError("Token expirado",None,401)
     req=request.args
     response=VinoController.predictionQuality(req["idVino"])
-    
-    if response == 500:
-        return Controllererrors.make_error(500,"No se pudo buscar en DB")
-    if response == 404:
-        return Controllererrors.make_error(404,"No existe ese vino")
-    return {"vino":response}
+    return response

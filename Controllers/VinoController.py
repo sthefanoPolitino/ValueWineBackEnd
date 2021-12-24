@@ -21,7 +21,11 @@ def insertVino(Nombre,Residualsugar,VolatileAcidity,FixedAcidity,CitricAcid,
 
 def getVinosByIdProductor(id):
     response=dbVinoService.getVinosByIdProductor(id)
-    return response
+    if response==404:
+        return makeError("No existe ese id de productor o el productor no tiene vinos",None,404)
+    elif type(response)==str:
+        return makeError("Error interno, error: ",response,500)
+    return makeResponseSuccess("Vinos encontrados correctamente",200,"vinos",response)
 
 def deleteVino(id):
     response=dbVinoService.deleteVino(id)
@@ -33,7 +37,11 @@ def deleteVino(id):
 
 def predictionQuality(id):
     response=dbVinoService.insertpredictionQuality(id)
-    return response
+    if response==404:
+        return makeError("No existe ese vino",None,404)
+    elif type(response)==str:
+        return makeError("Error interno, error: ",response,500)
+    return makeResponseSuccess("Vino actualizado correctamente",200,"vino",response)
 
 def makeError(msg,e,code):
     if(e):
