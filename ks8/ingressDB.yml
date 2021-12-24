@@ -1,0 +1,16 @@
+# Versión de la estructura 
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  # Indicamos a Okteto que genere la ruta de acceso
+  annotations:
+    dev.okteto.com/generate-host: "true"
+  # Nombre que el service va a tomar dentro del cluster
+  name: mysqldb
+spec:
+  rules:
+    - http:
+        paths:
+          - backend:
+              serviceName: db
+              servicePort: 33060

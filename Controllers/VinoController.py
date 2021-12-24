@@ -1,17 +1,10 @@
-from werkzeug.wrappers import response
+from ..Models.response import response
 from ..Models.vinoModel import vino
 from ..Services import dbVinoService
 # Imports necesarios
-import numpy as np
-import pandas as pd
-import seaborn as sb
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
-from matplotlib import cm
 plt.rcParams['figure.figsize'] = (16, 9)
 plt.style.use('ggplot')
-from sklearn import linear_model
-from sklearn.metrics import mean_squared_error, r2_score
 def insertVino(Nombre,Residualsugar,VolatileAcidity,FixedAcidity,CitricAcid,
                FreeSulfurDioxide,Chlorides,Density,
     TotalSulfurDioxide, PH,Sulphates,Alcohol,IdProductor,redwine):
@@ -20,6 +13,10 @@ def insertVino(Nombre,Residualsugar,VolatileAcidity,FixedAcidity,CitricAcid,
                  Alcohol,None,IdProductor,redwine)
     
     response=dbVinoService.insertVino(vinoObj.__json__())
+    if type(response)==str:
+        return makeError("Error interno error: ",response,500)
+    elif response==200:
+        return makeResponseSuccess("Vino insertado correctamente",200,None,None)
     return response
 
 def getVinosByIdProductor(id):
@@ -28,9 +25,26 @@ def getVinosByIdProductor(id):
 
 def deleteVino(id):
     response=dbVinoService.deleteVino(id)
-    return response
+    if response==404:
+        return makeError("No existe ese vino",None,404)
+    elif type(response)==str:
+        return makeError("Error interno, error: ",response,500)
+    return makeResponseSuccess("Vino eliminado correctamente",200,None,None)
 
 def predictionQuality(id):
     response=dbVinoService.insertpredictionQuality(id)
     return response
 
+def makeError(msg,e,code):
+    if(e):
+        errorObj=response(msg + str(e),code)
+    else:
+        errorObj=response(msg,code)
+    return errorObj.__json__()
+def makeResponseSuccess(msg,code,nombreEtiqueta,value):
+   
+    if(value):
+        Obj=response(msg,code,nombreEtiqueta,value)
+    else:
+        Obj=response(msg,code)
+    return Obj.__json__(value)

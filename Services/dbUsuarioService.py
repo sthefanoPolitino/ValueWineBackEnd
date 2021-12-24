@@ -1,9 +1,12 @@
+from ValueWIneBack import usuarioApis
 import mysql.connector
 import os
 from ValueWIneBack.Models import usuarioModel
 from dotenv import load_dotenv
 import jwt,datetime
+
 load_dotenv()
+
 def get_db():
     user=os.getenv('USERDB')
     password=os.getenv('PASSDB')
@@ -16,15 +19,13 @@ def get_db():
         cursor=db.cursor(dictionary=True)
         print('DB conectada')
         return db,cursor
-    except:
-        
+    except Exception as e:
         print("problema al acceder a la DB")
-        return False,False
-    
+        return False,e
 def insertUser(Nombre,Telefono,Rol,Direccion,Email,Password):
     DB,c=get_db()
     if DB==False:
-        return 500;
+        return str(c)
     resp=getUser(Email)
     if resp == True: #controla que no exista ese email en la db para no volver a insertarlo
         return 501
@@ -39,15 +40,13 @@ def insertUser(Nombre,Telefono,Rol,Direccion,Email,Password):
         print("insertado")
         return 200
     except Exception as e:
-        print(e)
-        return 500
+        return str(c)
     
 def login(email,ps):
     secret=os.getenv("KEY")
     DB,c=get_db()
-    print(ps)
     if DB==False:
-        return 500;
+        return str(c)
     try:
         query=("SELECT * FROM Usuario "
                "WHERE Email = %s AND Password = %s")
@@ -67,8 +66,7 @@ def login(email,ps):
         usuario=usuarioModel.UsuarioLogueado(user["Rol"],user["id"],user["Email"],token)
         return usuario.__json__()
     except Exception as e:
-        
-        return 500
+        return str(c)
     
     
 
@@ -84,3 +82,4 @@ def getUser(email):
     if user != None:
         return True 
     return None
+

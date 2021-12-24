@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: "2021-11-29T22:49:38Z"
+  labels:
+    stack.okteto.com/name: valuewineback
+    stack.okteto.com/service: mysql
+  name: mysql
+  namespace: polisthefano
+  resourceVersion: "372885417"
+  uid: 4203afd1-b54c-4476-b65d-c09c3be1fbf5
+spec:
+  clusterIP: 10.154.179.232
+  clusterIPs:
+  - 10.154.179.232
+  ports:
+  - name: p-3306-3306-tcp
+    port: 3306
+    protocol: TCP
+    targetPort: 3306
+  - name: p-3307-3306-tcp
+    port: 3307
+    protocol: TCP
+    targetPort: 3306
+  - name: p-33060-33060-tcp
+    port: 33060
+    protocol: TCP
+    targetPort: 33060
+  selector:
+    stack.okteto.com/name: valuewineback
+    stack.okteto.com/service: mysql
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}

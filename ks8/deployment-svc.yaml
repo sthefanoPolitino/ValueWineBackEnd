@@ -1,0 +1,80 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+    dev.okteto.com/last-updated: 2021-11-29T14:20:10
+  creationTimestamp: "2021-11-29T14:20:10Z"
+  generation: 1
+  labels:
+    stack.okteto.com/name: valuewineback
+    stack.okteto.com/service: mysql
+  name: mysql
+  namespace: polisthefano
+  resourceVersion: "372427593"
+  uid: 8cdbf76b-a8c5-43b4-899a-2117d0cb78b3
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      stack.okteto.com/name: valuewineback
+      stack.okteto.com/service: mysql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        stack.okteto.com/name: valuewineback
+        stack.okteto.com/service: mysql
+    spec:
+      volumes:
+      - name: pvc
+        persistentVolumeClaim:
+          claimName: pvc
+      containers:
+      - args:
+        - --default-authentication-plugin=mysql_native_password
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: root
+        image: mysql
+        imagePullPolicy: Always
+        name: mysql
+        ports:
+        - name: tcp
+          containerPort: 3306
+          protocol: TCP
+        - containerPort: 33060
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /data
+          name: pvc  
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 0
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: "2021-11-29T14:20:14Z"
+    lastUpdateTime: "2021-11-29T14:20:14Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  - lastTransitionTime: "2021-11-29T14:20:11Z"
+    lastUpdateTime: "2021-11-29T14:20:14Z"
+    message: ReplicaSet "mysql-6bdd89b4bc" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  observedGeneration: 1
+  readyReplicas: 1
+  replicas: 1
+  updatedReplicas: 1

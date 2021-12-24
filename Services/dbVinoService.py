@@ -1,11 +1,14 @@
 from .dbUsuarioService import get_db
 from ..Models.vinoModel import vino
+
 from ..Controllers import Prediction
+from ValueWIneBack.Models import response
+
 def insertVino(vino):
     print(vino)
     DB,c=get_db()
     if DB==False:
-        return 500
+        return str(c) 
     try:
         
         query=("INSERT INTO Vino "
@@ -23,13 +26,13 @@ def insertVino(vino):
         return 200
     except Exception as e:
         print(e)
-        return 500
+        return str(e)
     
 
 def getVinosByIdProductor(id):
     DB,c=get_db()
     if DB==False:
-        return 500;
+        return c;
     try:
         query=("SELECT * from Vino WHERE idProductor = %s")
         c.execute(query,(id,))
@@ -46,13 +49,12 @@ def getVinosByIdProductor(id):
         return vinos
     except Exception as e:
         print(e)
-        return 500
-    return ""
+        return e
     
 def deleteVino(id):
     DB,c=get_db()
     if DB==False:
-        return 500;
+        return str(c);
     try:
         query=("DELETE  from Vino WHERE id = %s")
         c.execute(query,(id,))
@@ -65,13 +67,13 @@ def deleteVino(id):
         return 200
     except Exception as e:
         print(e)
-        return 500
-    return ""
+        return str(e)
+    
 
 def insertpredictionQuality(id):
     DB,c=get_db()
     if DB==False:
-        return 500;
+        return c;
     #busca el vino a predecir en la db
     vinoApredecir={}
     result=None
@@ -103,4 +105,5 @@ def insertpredictionQuality(id):
         
     except Exception as e:
         print(e)
-        return 500
+        return str(e)
+
