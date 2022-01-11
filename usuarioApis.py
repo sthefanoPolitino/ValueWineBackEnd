@@ -17,7 +17,7 @@ def InsertUser():
     response=dbUsuarioController.insertUser(reqNombre,reqTelefono,reqRol,reqDireccion,reqEmail,reqPassword)
     return response
 
-@usuario.route(''+url+'/loginUsuario',methods=['GET'])
+@usuario.route(''+url+'/loginUsuario',methods=['POST'])
 def LoginUser():
     req=request.get_json();
     reqEmail=req['email']

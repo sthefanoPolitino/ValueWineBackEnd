@@ -1,8 +1,6 @@
 from .dbUsuarioService import get_db
-from ..Models.vinoModel import vino
-
 from ..Controllers import Prediction
-from ValueWIneBack.Models import response
+
 
 def insertVino(vino):
     print(vino)
