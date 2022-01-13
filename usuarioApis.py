@@ -32,7 +32,7 @@ def checkSesion():
     #reqToken=req['token']
     response=dbUsuarioController.checkSesionRefreshtoken(req1)
     if response==518:
-        return dbUsuarioController.makeError("Token expirado",None,401)
+        return dbUsuarioController.makeError("Sesion expirado",None,518)
     elif response==401:
         return dbUsuarioController.makeError("No estas autorizado",None,401)
     return dbUsuarioController.makeResponseSuccess("Token valido",200,"token",response)
