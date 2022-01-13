@@ -53,7 +53,7 @@ def login(email,ps):
         c.execute(query,(email,ps))
         user=c.fetchone()
         if user is None:
-           return 206 
+           return 404 
         c.close()
         DB.close()
         

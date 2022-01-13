@@ -24,8 +24,8 @@ def loginUser(Email,Password):
     response=dbUsuarioService.login(Email,crypPass.hexdigest())
     if(type(response)==str):
         return makeError("Error interno, error: ",response,500)
-    elif(response==206):
-        return makeError("Usuario no existente",None,206)
+    elif(response==404):
+        return makeError("Usuario no existente",None,404)
     return response
 
 
