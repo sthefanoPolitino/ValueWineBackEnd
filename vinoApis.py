@@ -71,3 +71,16 @@ def predictionQuality():
     req=request.args
     response=VinoController.predictionQuality(req["idVino"])
     return response
+
+@vino.route(''+url+'/edit',methods=['PATCH'])
+def editVino():
+    req1=request.headers #trae todos los headers
+    respCheckToken=dbUsuarioController.checkSesionRefreshtoken(req1)
+    if respCheckToken == 401:
+            return VinoController.makeError("No estas autorizado",None,401)
+    if respCheckToken == 518:
+        return VinoController.makeError("Token expirado",None,401)
+    req=request.get_json()
+    args=request.args
+    response=VinoController.editVino(args['id'],req["vino"])
+    return response

@@ -41,7 +41,7 @@ def checkSesionRefreshtoken(headers):
         print("Token is still valid and active")
         payload={"email":decodeToken["email"],
                  "rol":decodeToken["rol"],
-                 "exp": datetime.datetime.utcnow()+datetime.timedelta(seconds=30)}
+                 "exp": datetime.datetime.utcnow()+datetime.timedelta(seconds=86400)}
         token=jwt.encode(payload, secret, algorithm="HS256")
         return token
     except jwt.ExpiredSignatureError:

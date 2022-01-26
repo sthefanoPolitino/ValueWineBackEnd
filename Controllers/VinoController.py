@@ -56,3 +56,15 @@ def makeResponseSuccess(msg,code,nombreEtiqueta,value):
     else:
         Obj=response(msg,code)
     return Obj.__json__(value)
+
+def editVino(id,nuevoVino):
+    vinoObj=vino(nuevoVino["nombre"],nuevoVino['Residualsugar'],nuevoVino['VolatileAcidity'],nuevoVino['FixedAcidity'],nuevoVino['CitricAcid']
+                 ,nuevoVino['FreeSulfurDioxide'],nuevoVino['Chlorides'],nuevoVino['Density'],nuevoVino['TotalSulfurDioxide'],nuevoVino['PH'],nuevoVino['Sulphates'],
+                 nuevoVino['Alcohol'],None,nuevoVino['idProductor'],nuevoVino['Redwine'])
+
+    response=dbVinoService.editVino(id,vinoObj.__json__())
+    if response==404:
+            return makeError("No existe ese vino",None,404)
+    elif type(response)==str:
+        return makeError("Error interno, error: ",response,500)
+    return makeResponseSuccess("Vino actualizado correctamente",200,"vino",response)

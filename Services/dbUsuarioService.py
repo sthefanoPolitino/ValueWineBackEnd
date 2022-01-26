@@ -56,12 +56,10 @@ def login(email,ps):
            return 404 
         c.close()
         DB.close()
-        
-        print(datetime.datetime.now()+datetime.timedelta(seconds=60))
         payload={"email":email,
                  "rol":user["Rol"],
                  "idUsuario":user["id"],
-                 "exp": datetime.datetime.utcnow()+datetime.timedelta(seconds=30)}
+                 "exp": datetime.datetime.utcnow()+datetime.timedelta(seconds=86400)}
         token=jwt.encode(payload, secret, algorithm="HS256")
         usuario=usuarioModel.UsuarioLogueado(user["Rol"],user["id"],user["Email"],token)
         return usuario.__json__()
