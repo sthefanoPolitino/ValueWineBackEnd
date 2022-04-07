@@ -1,2 +1,0 @@
-El archivo mysql es el svc necesario para conectar el microservicio que lo deployamos con octeto stack deploy en la ruta que esta el Docker compone.
-El archivo statefulset deploya el pod de la db y si borro el volumen lo deplora tambien
