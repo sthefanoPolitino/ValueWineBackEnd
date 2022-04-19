@@ -132,3 +132,22 @@ def editVino(id, nuevoVino):
     except Exception as e:
         print(e)
         return str(e)
+    
+def getAllVinos():
+    DB,c=get_db()
+    if DB==False:
+        return str(c);
+    #busca los vinos en la db 
+    try:
+        c.execute("SELECT * From Vino")
+        vinos=c.fetchall()
+        for vino in vinos:
+            if vino["Redwine"]==1:
+                vino["Redwine"]=True
+            elif vino["Redwine"]==0:
+                vino["Redwine"]=False 
+        c.close()
+        DB.close()
+        return vinos
+    except Exception as e:
+        return str(e)

@@ -84,3 +84,15 @@ def editVino():
     args=request.args
     response=VinoController.editVino(args['id'],req["vino"])
     return response
+
+@vino.route(''+url+'/getAllVinos',methods=['GET'])
+def getAllVinos():
+    req1=request.headers #trae todos los headers
+    respCheckToken=dbUsuarioController.checkSesionRefreshtoken(req1)
+    if respCheckToken == 401:
+            return VinoController.makeError("No estas autorizado",None,401)
+    if respCheckToken == 518:
+        return VinoController.makeError("Token expirado",None,401)
+    args=request.args
+    response=VinoController.getAllVinos()
+    return response

@@ -1,3 +1,4 @@
+from flask import jsonify
 from ..Models.response import response
 from ..Models.vinoModel import vino
 from ..Services import dbVinoService
@@ -50,7 +51,6 @@ def makeError(msg,e,code):
         errorObj=response(msg,code)
     return errorObj.__json__()
 def makeResponseSuccess(msg,code,nombreEtiqueta,value):
-   
     if(value):
         Obj=response(msg,code,nombreEtiqueta,value)
     else:
@@ -68,3 +68,10 @@ def editVino(id,nuevoVino):
     elif type(response)==str:
         return makeError("Error interno, error: ",response,500)
     return makeResponseSuccess("Vino actualizado correctamente",200,"vino",response)
+
+def getAllVinos():
+    resp=dbVinoService.getAllVinos()
+    if type(resp)==str:
+        return makeError("Error interno, error: ",resp,500)
+    print(resp)
+    return jsonify({"msg":"Vinos obtenidos correctamente","code":200,str("vinos"):resp})
