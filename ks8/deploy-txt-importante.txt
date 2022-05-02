@@ -1,4 +1,6 @@
 Para deployar debemos hacer lo siguiente, una vez conectado con okteto
+para conectar con okteto
+export KUBECONFIG=okteto-kube.config:${KUBECONFIG:-$HOME/.kube/config}
 Largamos okteto stack deploy --file ./rutadeldockercompose
 eso deploya el microservicio ahi borramos lo que levanta de mysql que no sirve
 dejamos solo el de microservicio
