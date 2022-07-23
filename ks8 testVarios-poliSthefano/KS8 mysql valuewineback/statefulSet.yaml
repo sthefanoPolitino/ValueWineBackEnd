@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mysql
+  namespace: testvarios-polisthefano
+spec:
+  selector:
+    matchLabels:
+      app: mysql
+  serviceName: "mysql"
+  replicas: 1
+  revisionHistoryLimit: 10
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - name: mysql
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: root
+        image: mysql
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3306
+          protocol: TCP
+        - containerPort: 33060
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /var/lib/mysql
+          name: pvc  
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 0
+  volumeClaimTemplates:
+    - metadata:
+        name: pvc
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        storageClassName: "default"
+        resources:
+          requests:
+            storage: 3Gi

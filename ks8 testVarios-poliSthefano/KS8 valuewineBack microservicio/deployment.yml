@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  labels:
+    app: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: backend
+        image: sthefanopoli/microservicio_valuewine:dev
+        ports:
+        - containerPort: 5000
+        env:
+          - name: HOSTDB
+            valueFrom:
+              configMapKeyRef: 
+               name: env
+               key: HOSTDB
+          - name: KEY
+            valueFrom:
+              secretKeyRef: 
+               name: credentials
+               key: key
+          - name: PASSDB
+            valueFrom:
+              secretKeyRef: 
+               name: credentials
+               key: mysql-password
+          - name: PORTHOSTDB
+            valueFrom:
+              configMapKeyRef: 
+               name: env
+               key: PORTHOSTDB
+          - name: USERDB
+            valueFrom:
+              configMapKeyRef:
+               name: env
+               key: USERDB
+
+
