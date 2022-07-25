@@ -58,4 +58,4 @@ def prediccion(vino):
         
         return int(result)
     except Exception as e:
-        return 500
+        return e
