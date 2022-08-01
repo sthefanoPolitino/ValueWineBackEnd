@@ -1,19 +1,13 @@
 from ValueWIneBack.Controllers import dbUsuarioController
+from ValueWIneBack.utils.decorators import checktoken
 from flask import request
 from flask import Blueprint
 from ValueWIneBack.Controllers import VinoController
 vino=Blueprint('vino',__name__)
 url='/vino'
 @vino.route(''+url+'/insertVino',methods=['PUT'])
+@checktoken
 def InsertVino():
-    
-    req1=request.headers
-    respCheckToken=dbUsuarioController.checkSesionRefreshtoken(req1)
-    if respCheckToken == 401:
-            return VinoController.makeError("No estas autorizado",None,401)
-    if respCheckToken == 518:
-        return VinoController.makeError("Token expirado",None,401)
-    
     req=request.get_json()
     reqNombre=req["nombre"]
     reqVolatileAcidity=req["VolatileAcidity"]
@@ -37,62 +31,36 @@ def InsertVino():
     return response
 
 @vino.route(''+url+'/deleteVino',methods=['DELETE'])
+@checktoken
 def deleteVino():
-    req1=request.headers #trae todos los headers
-    respCheckToken=dbUsuarioController.checkSesionRefreshtoken(req1)
-    if respCheckToken == 401:
-            return VinoController.makeError("No estas autorizado",None,401)
-    if respCheckToken == 518:
-        return VinoController.makeError("Token expirado",None,401)
     req=request.args #trae los params en formato de dict
     response=VinoController.deleteVino(req["id"])
     return response
 
 @vino.route(''+url+'/getVinosByIdProductor',methods=['GET'])
+@checktoken
 def getVinosByIdProductor():
-    req1=request.headers #trae todos los headers
-    respCheckToken=dbUsuarioController.checkSesionRefreshtoken(req1)
-    if respCheckToken == 401:
-            return VinoController.makeError("No estas autorizado",None,401)
-    if respCheckToken == 518:
-        return VinoController.makeError("Token expirado",None,401)
     req=request.args #trae los params en formato de dict
     response=VinoController.getVinosByIdProductor(req["idProductor"])
     return response
 
 @vino.route(''+url+'/predictionQuality',methods=['POST'])
+@checktoken
 def predictionQuality():
-    req1=request.headers #trae todos los headers
-    respCheckToken=dbUsuarioController.checkSesionRefreshtoken(req1)
-    if respCheckToken == 401:
-            return VinoController.makeError("No estas autorizado",None,401)
-    if respCheckToken == 518:
-        return VinoController.makeError("Token expirado",None,401)
     req=request.args
     response=VinoController.predictionQuality(req["idVino"])
     return response
 
 @vino.route(''+url+'/edit',methods=['PATCH'])
+@checktoken
 def editVino():
-    req1=request.headers #trae todos los headers
-    respCheckToken=dbUsuarioController.checkSesionRefreshtoken(req1)
-    if respCheckToken == 401:
-            return VinoController.makeError("No estas autorizado",None,401)
-    if respCheckToken == 518:
-        return VinoController.makeError("Token expirado",None,401)
     req=request.get_json()
     args=request.args
     response=VinoController.editVino(args['id'],req["vino"])
     return response
 
 @vino.route(''+url+'/getAllVinos',methods=['GET'])
+@checktoken
 def getAllVinos():
-    req1=request.headers #trae todos los headers
-    respCheckToken=dbUsuarioController.checkSesionRefreshtoken(req1)
-    if respCheckToken == 401:
-            return VinoController.makeError("No estas autorizado",None,401)
-    if respCheckToken == 518:
-        return VinoController.makeError("Token expirado",None,401)
-    args=request.args
     response=VinoController.getAllVinos()
     return response
