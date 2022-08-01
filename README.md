@@ -1,6 +1,6 @@
 # ValueWineBack
 
-# ValueWineBack -> Microservicio Rest
+# ValueWineBack -> API Rest
 
 ## Descripción
 
@@ -154,6 +154,28 @@ ${URL}/vino/getAllVinos
 #### HEADER
 
 Bearer Token : eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InBydWViYUB1c2VyLmNvbSIsInJvbCI6MCwiZXhwIjoxNjMwNjIwMjMyfQ.b2AMUJymtNu5ewOgH-\_Xc3J58WkRtQUw9l_2Fm0MTI0
+
+### Edit Vino By id
+
+Nos conectamos con mysql para editar un vino por su id
+
+#### URL
+
+```
+${URL}/vino/edit?id=9
+```
+
+#### HEADER
+
+Bearer Token : eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InBydWViYUB1c2VyLmNvbSIsInJvbCI6MCwiZXhwIjoxNjMwNjIwMjMyfQ.b2AMUJymtNu5ewOgH-\_Xc3J58WkRtQUw9l_2Fm0MTI0
+
+#### Params
+
+idVino 9, concatenarlo en la url
+
+#### Body
+
+obj vino, revisar insert
 
 ## Herramientas
 
