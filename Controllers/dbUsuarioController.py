@@ -1,6 +1,6 @@
-from ValueWIneBack.Models.response import response
-from ValueWIneBack.Services import dbUsuarioService
-from ValueWIneBack.Models import usuarioModel
+from ..Models.response import response
+from ..Services import dbUsuarioService
+from ..Models import usuarioModel
 import os
 import jwt,datetime
 import hashlib

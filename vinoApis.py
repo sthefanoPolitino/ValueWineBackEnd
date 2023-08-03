@@ -1,8 +1,8 @@
-from ValueWIneBack.Controllers import dbUsuarioController
-from ValueWIneBack.utils.decorators import checktoken
+from .Controllers import dbUsuarioController
+from .utils.decorators import checktoken
 from flask import request
 from flask import Blueprint
-from ValueWIneBack.Controllers import VinoController
+from .Controllers import VinoController
 vino=Blueprint('vino',__name__)
 url='/vino'
 @vino.route(''+url+'/insertVino',methods=['PUT'])

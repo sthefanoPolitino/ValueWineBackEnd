@@ -1,6 +1,6 @@
 from flask import Flask
-from ValueWIneBack import usuarioApis
-from ValueWIneBack import vinoApis
+from . import usuarioApis
+from . import vinoApis
 from .Services.dbService import createSchema
 app = Flask(__name__)
 app.register_blueprint(usuarioApis.usuario)

@@ -1,7 +1,7 @@
-from ValueWIneBack import usuarioApis
+
 import mysql.connector
 import os
-from ValueWIneBack.Models import usuarioModel
+from ..Models import usuarioModel
 from dotenv import load_dotenv
 import jwt,datetime
 
@@ -20,7 +20,7 @@ def get_db():
         print('DB conectada')
         return db,cursor
     except Exception as e:
-        print("problema al acceder a la DB")
+        print("problema al acceder a la DB", e)
         return False,e
 def insertUser(Nombre,Telefono,Rol,Direccion,Email,Password):
     DB,c=get_db()

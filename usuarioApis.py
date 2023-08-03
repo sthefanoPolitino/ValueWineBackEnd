@@ -1,7 +1,7 @@
 import json
 from flask import Blueprint
 from flask import request
-from ValueWIneBack.Controllers import dbUsuarioController
+from .Controllers import dbUsuarioController
 
 usuario=Blueprint('usuario',__name__)
 url='/usuario'

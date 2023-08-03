@@ -20,6 +20,8 @@ source venv/bin/activate
 
 Correr el servidor accesible desde localhost
 export FLASK_APP=app/**init**.py
+
+
 flask run --host=0.0.0.0
 
 ## Requisitos
