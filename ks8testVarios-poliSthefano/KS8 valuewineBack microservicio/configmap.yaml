@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: env
+  namespace: testvarios-polisthefano
+data: 
+  HOSTDB: mysql
+  PORTHOSTDB: "3306"
+  USERDB: root 
+  PASSDB: root
+  KEY: qJdkOKZkOPxxeIYgi1l0kAJMlHtVN9oKAjIH0gsQ
+  

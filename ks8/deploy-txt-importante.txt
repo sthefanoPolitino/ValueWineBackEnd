@@ -1,0 +1,12 @@
+Para deployar debemos hacer lo siguiente, una vez conectado con okteto
+para conectar con okteto
+export KUBECONFIG=okteto-kube.config:${KUBECONFIG:-$HOME/.kube/config}
+Largamos okteto stack deploy --file ./rutadeldockercompose
+eso deploya el microservicio ahi borramos lo que levanta de mysql que no sirve
+dejamos solo el de microservicio
+largamos k apply -f statefulset.yml para deployar la db con el volumen
+luego k apply -f mysql que conecta el microservicio con el statefulset
+una vez levantado todo y andando: k exec --stdin --tty mysql-0 -- sh
+mysql-0 es el nombre del pod eso es para ver la db por sh
+El archivo mysql es el svc necesario para conectar el microservicio que lo deployamos con okteto stack deploy en la ruta que esta el Docker compone.
+El archivo statefulset deploya el pod de la db y si borro el volumen lo deplora tambien

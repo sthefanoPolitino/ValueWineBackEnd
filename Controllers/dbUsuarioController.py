@@ -1,6 +1,6 @@
-from ValueWIneBack.Services import dbUsuarioService
-from ValueWIneBack.Models import usuarioModel
-import json
+from ..Models.response import response
+from ..Services import dbUsuarioService
+from ..Models import usuarioModel
 import os
 import jwt,datetime
 import hashlib
@@ -11,15 +11,21 @@ def insertUser(Nombre,Telefono,Rol,Direccion,Email,Password):
     user=usuario.__json__()
     response=dbUsuarioService.insertUser(user["Nombre"],user["Telefono"],user["Rol"]
                                          ,user["Direccion"],user["Email"],user["Password"])
-    return response
+    if(response==501):
+        return makeError("Email existente",None,501)
+    elif(type(response)==str):
+        return makeError("Error interno, error: ",response,500)
+    return makeResponseSuccess("Usuario creado Correctamente",200,None,None)
 
 def loginUser(Email,Password):
     #crear objeto
     crypPass=hashlib.md5()
     crypPass.update(Password.encode("utf-8"))
     response=dbUsuarioService.login(Email,crypPass.hexdigest())
-    if response==False:
-        return False
+    if(type(response)==str):
+        return makeError("Error interno, error: ",response,500)
+    elif(response==404):
+        return makeError("Usuario no existente",None,404)
     return response
 
 
@@ -35,11 +41,24 @@ def checkSesionRefreshtoken(headers):
         print("Token is still valid and active")
         payload={"email":decodeToken["email"],
                  "rol":decodeToken["rol"],
-                 "exp": datetime.datetime.utcnow()+datetime.timedelta(seconds=30)}
+                 "exp": datetime.datetime.utcnow()+datetime.timedelta(seconds=86400)}
         token=jwt.encode(payload, secret, algorithm="HS256")
-        return token;
+        return token
     except jwt.ExpiredSignatureError:
-        return 518;
+        return 518
     except jwt.InvalidTokenError as e:
-        return 401;
+        return 401
     
+def makeError(msg,e,code):
+    if(e):
+        errorObj=response(msg + str(e),code)
+    else:
+        errorObj=response(msg,code)
+    return errorObj.__json__()
+def makeResponseSuccess(msg,code,nombreEtiqueta,value):
+    print("valores",value,nombreEtiqueta)
+    if(value):
+        Obj=response(msg,code,nombreEtiqueta,value)
+    else:
+        Obj=response(msg,code)
+    return Obj.__json__(value)

@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    stack.okteto.com/name: valuewineback
+    stack.okteto.com/service: mysql
+  name: mysql
+  namespace: polisthefano
+  resourceVersion: "372427593"
+  uid: 8cdbf76b-a8c5-43b4-899a-2117d0cb78b3
+spec:
+  serviceName: "mysql"
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      stack.okteto.com/name: valuewineback
+      stack.okteto.com/service: mysql
+  template:
+    metadata:
+      labels:
+        stack.okteto.com/name: valuewineback
+        stack.okteto.com/service: mysql
+    spec:
+      containers:
+      - name: mysql
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: root
+        image: mysql
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3306
+          protocol: TCP
+        - containerPort: 33060
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /var/lib/mysql
+          name: pvc  
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 0
+  volumeClaimTemplates:
+    - metadata:
+        name: pvc
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        storageClassName: "default"
+        resources:
+          requests:
+            storage: 3Gi

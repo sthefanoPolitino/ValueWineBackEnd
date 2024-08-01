@@ -5,3 +5,4 @@ __pycache__/
 /Errors/py__cache__/
 /Responses/py__cache__/
 /Models/py__cache__/
+.DS_Store
